@@ -2,3 +2,4 @@ apigee-remote-service*
 
 config.yaml
 my_*.json
+node_modules
