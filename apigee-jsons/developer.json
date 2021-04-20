@@ -1,0 +1,12 @@
+{
+  "email": "@@EMAIL@@",
+  "firstName": "First",
+  "lastName": "Last",
+  "userName": "@@USER@@",
+  "apps": [
+    "EnvoyApp"
+  ],
+  "status": "active",
+  "createdAt": "1618920853209",
+  "lastModifiedAt": "1618920853209"
+}

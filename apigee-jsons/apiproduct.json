@@ -1,0 +1,31 @@
+{
+  "name": "EnvoyProduct",
+  "displayName": "EnvoyProduct",
+  "approvalType": "auto",
+  "attributes": [
+    {
+      "name": "access",
+      "value": "public"
+    },
+    {
+      "name": "apigee-remote-service-targets",
+      "value": "envoy.local"
+    }
+  ],
+  "apiResources": [
+    "/graphql",
+    "/ws",
+    "/com.apigee.examples.grpc.server.grpcserver/MessengerService"
+  ],
+  "environments": [
+    "eval"
+  ],
+  "proxies": [
+    "remote-service"
+  ],
+  "quota": "5",
+  "quotaInterval": "1",
+  "quotaTimeUnit": "minute",
+  "createdAt": "1618920601345",
+  "lastModifiedAt": "1618920601345"
+}

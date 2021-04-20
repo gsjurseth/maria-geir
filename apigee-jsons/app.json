@@ -1,0 +1,5 @@
+{
+  "apiProducts": [ "EnvoyProduct"], 
+  "keyExpiresIn" : "2630000000",
+  "name" : "EnvoyApp"
+}
