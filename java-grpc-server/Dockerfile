@@ -8,7 +8,7 @@ RUN apk add --no-cache tini
 COPY target/*.jar /app/app.jar
 COPY init.sh /app/
 
-EXPOSE 8080
+EXPOSE 9090
 
 ENTRYPOINT ["tini", "-s", "--", "sh", "init.sh"]
 

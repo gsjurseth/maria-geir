@@ -9,13 +9,13 @@
     },
     {
       "name": "apigee-remote-service-targets",
-      "value": "envoy.local"
+      "value": "envoy.local,grpc.local,grpc.local:9090,localhost:8080,localhost"
     }
   ],
   "apiResources": [
     "/graphql",
     "/ws",
-    "/com.apigee.examples.grpc.server.grpcserver/MessengerService"
+    "/com.apigee.examples.grpc.server.grpcserver.MessengerService/getGreeting"
   ],
   "environments": [
     "eval"

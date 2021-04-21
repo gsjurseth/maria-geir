@@ -17,6 +17,7 @@ import (
 
   "google.golang.org/grpc"
   pb "apigee/examples/grpcserver"
+  "google.golang.org/grpc/metadata"
 )
 
 const (
@@ -25,7 +26,7 @@ const (
 )
 
 func main() {
-  //key := flag.String("k", "", "an api key ") 
+  key := flag.String("k", "", "an api key ") 
   host := flag.String("h", "localhost", "remote host to connect to") 
   port := flag.String("p", "9090", "remote port to connect to")
   pirate := flag.Bool("pirate", false, "set if you want a pirate greeting")
@@ -49,6 +50,11 @@ func main() {
 
   if *pirate == true {
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+    if *key != "" {
+      log.Printf("Using API key: %s", *key)
+      ctx = metadata.AppendToOutgoingContext(ctx, "x-api-key", *key)
+      ctx = metadata.AppendToOutgoingContext(ctx, "Host", "envoy.local")
+    }
     defer cancel()
     r, err := c.GetPirateGreeting(ctx, &pb.MessengerRequest{Msg: name})
     if err != nil {

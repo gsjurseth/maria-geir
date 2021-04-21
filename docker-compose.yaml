@@ -1,0 +1,55 @@
+version: '3.7'
+services:
+
+  graphql.local:
+    build:
+      context: ./nodejs-graphql-server
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+    ports:
+      - "4000:4000"
+    expose:
+      - "4000"
+
+  grpc.local:
+    build:
+      context: ./java-grpc-server
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+    ports:
+      - "9090:9090"
+    expose:
+      - "9090"
+
+  envoy.local:
+    image: envoyproxy/envoy:v1.17-latest
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    networks:
+      - envoymesh
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+
+  envoy_adapter.local:
+    build:
+      context: ./envoy_adapter
+      dockerfile: Dockerfile
+    volumes:
+      - ./config.yaml:/config.yaml
+    environment:
+      DEBUG: "debug"
+    networks:
+      - envoymesh
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    expose:
+      - "5000"
+      - "5001"
+
+networks:
+  envoymesh: {}

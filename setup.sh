@@ -5,14 +5,17 @@ config=${BASEDIR}/config.yaml
 
 usage() { 
   echo "Usage assumes setup for Apigee X. You may need to edit this for hybrid and definitely for legacy/opdk" 1>&2
-  echo "Usage: $0 [-h] [-u <user-email: an email address for the account>] [-o <organiztion> ] [-e <environment>] [-t <token>] [-r <remote url>] [-c <config-file-path]" 1>&2
+  echo "Usage: $0 [-h] [-a <path-to-ax-sa-json>] [-u <user-email: an email address for the account>] [-o <organiztion> ] [-e <environment>] [-t <token>] [-r <remote url>] [-c <config-file-path]" 1>&2
   exit 1;
 }
 
-while getopts ":e:o:t:r:c:u:h" o; do
+while getopts "a::e:o:t:r:c:u:h" o; do
     case "${o}" in
         h)
           usage
+        ;;
+        a)
+            analytics=${OPTARG}
         ;;
         u)
             email=${OPTARG}
@@ -63,9 +66,10 @@ wget "https://github.com/apigee/apigee-remote-service-envoy/releases/download/v2
 
 tar xf apigee-remote-service-cli.tar.gz apigee-remote-service-cli
 tar xf apigee-remote-service-envoy.tar.gz apigee-remote-service-envoy
+cp apigee-remote-service-envoy envoy_adapter
 
 
-${BASEDIR}/apigee-remote-service-cli provision -o $org -e $env -t $token --runtime $remoteurl > $config
+${BASEDIR}/apigee-remote-service-cli provision -o $org -e $env -t $token --runtime $remoteurl --analytics-sa ${analytics} > $config
 
 # Our api product
 curl -X POST "${BASEURL}/apiproducts" -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d @${BASEDIR}/apigee-jsons/apiproduct.json > ${BASEDIR}/my_apiproduct.json
@@ -76,3 +80,6 @@ cat $BASEDIR/apigee-jsons/developer.json | sed -e "s/@@EMAIL@@/${email}/" -e "s/
 
 # Our app
 curl -X POST "${BASEURL}/developers/${email}/apps" -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d @${BASEDIR}/apigee-jsons/app.json > ${BASEDIR}/my_app.json
+
+
+rm apigee-remote-service-*
