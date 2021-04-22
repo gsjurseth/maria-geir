@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "kafkajs": "^1.15.0",
+    "ws": "^7.4.5"
+  },
+  "name": "nodejs-websocket-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sleep 20 ; node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

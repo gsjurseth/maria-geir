@@ -1,6 +1,63 @@
 version: '3.7'
 services:
 
+# Our kafka stuff... Stole most of this config from bitnami
+  zookeeper.local:
+    image: docker.io/bitnami/zookeeper:3
+    networks:
+      - envoymesh
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka.local:
+    #image: docker.io/bitnami/kafka:2
+    build:
+      context: ./kafka
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+    ports:
+      - "9092:9092"
+    expose:
+      - "9092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper.local:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper.local
+
+  producer.local:
+    build:
+      context: ./nodejs-kafka-producer
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+#    ports:
+#      - "8000:8000"
+#    expose:
+#      - "8000"
+    depends_on:
+      - kafka.local
+
+  ws.local:
+    build:
+      context: ./nodejs-websocket-server
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    depends_on:
+      - producer.local
+
   graphql.local:
     build:
       context: ./nodejs-graphql-server
@@ -50,6 +107,12 @@ services:
     expose:
       - "5000"
       - "5001"
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
 
 networks:
   envoymesh: {}

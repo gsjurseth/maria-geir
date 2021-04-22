@@ -51,10 +51,8 @@ func main() {
   if *pirate == true {
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
     if *key != "" {
-      log.Printf("Using API key: %s", *key)
+      //log.Printf("Using API key: %s", *key)
       ctx = metadata.AppendToOutgoingContext(ctx, "x-api-key", *key)
-      ctx = metadata.AppendToOutgoingContext(ctx, "Host", "localhost:8080")
-      log.Printf("Our context: %v", ctx)
     }
     defer cancel()
     r, err := c.GetPirateGreeting(ctx, &pb.MessengerRequest{Msg: name})
@@ -65,10 +63,8 @@ func main() {
   } else {
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
     if *key != "" {
-      log.Printf("Using API key: %s", *key)
+      //log.Printf("Using API key: %s", *key)
       ctx = metadata.AppendToOutgoingContext(ctx, "x-api-key", *key)
-      ctx = metadata.AppendToOutgoingContext(ctx, "Host", "localhost:8080")
-      log.Printf("Our context: %v", ctx)
     }
     defer cancel()
     r, err := c.GetGreeting(ctx, &pb.MessengerRequest{Msg: name})

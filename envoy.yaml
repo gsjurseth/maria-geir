@@ -32,6 +32,8 @@ static_resources:
         typed_config:  
           "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
           stat_prefix: ingress_http
+          upgrade_configs:
+          - upgrade_type: websocket
           route_config:
             virtual_hosts:
             - name: default
@@ -44,6 +46,7 @@ static_resources:
               - match: { prefix: /ws }
                 route:
                   cluster: ws
+                  prefix_rewrite: /
               - match: { prefix: /com.apigee.examples.grpc.server.grpcserver.MessengerService }
                 route:
                   cluster: grpc
@@ -135,8 +138,8 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: "ws"
-                port_value: 80
+                address: "ws.local"
+                port_value: 8000
 
   # define cluster for grpc target
   - name: grpc
