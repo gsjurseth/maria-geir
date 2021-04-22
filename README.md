@@ -1,11 +1,14 @@
 # maria-geir
-Sample repo showin Envoy used for several services plus a portal that documents them
+Sample repo showing Envoy used for several services plus a portal that documents them
 
 ## What's in here anyway?
 The following have been setup and are run with docker compose
 * grpc server written in java running greeter service: normal and pirate mode available
 * grpc client written in golang that calls the remote service (and accepts an optional key as an argument)
 * a graphql service. This uses all flat files and is simply the book list example. It's self contained
+* kafka and zookeepr for said kafka
+* a nodejs service that constantly sends messages to a kafka topic called `messages`
+* a nodejs service that consumes that topic and then sends those messages to any websocket clients that connect and use a unique groupId
 * an envoy service that proxies for all of it.
 
 ## What's coming
@@ -52,13 +55,13 @@ So my examples use it.
 Every example I provide here refers to `<apikey>`. You'll need to replace that with the key stored in `my_app.json` which
 is created when the setup script finishes.
 
-
 ### Testing the websocket bit:
 The point of the websocket is two fold:
 1. Show how we might use envoy with the envoy adapter to act as a proxy for websockets
 2. Use the websocket server as a mediation point: websocket <-> kafka
 
-The websocket server is itself subscribing to a kafka topic that's being populated by another nodejs-service: a producer
+The websocket server is itself subscribing to a kafka topic that's being populated by another nodejs-service: a producer.
+Provide a `groupId` as shown below or it will default to one ... And that one will only work once of course.
 
 ```bash
  wscat -c http://localhost:8080/ws -H x-api-key:<apikey> -H "x-group-id: first"
