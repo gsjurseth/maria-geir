@@ -60,7 +60,7 @@ case $OS in
 esac
 
 wget "https://github.com/apigee/apigee-remote-service-cli/releases/download/v2.0.0/apigee-remote-service-cli_2.0.0_${arch}_64-bit.tar.gz" -O apigee-remote-service-cli.tar.gz
-wget "https://github.com/apigee/apigee-remote-service-envoy/releases/download/v2.0.0/apigee-remote-service-envoy_2.0.0_${arch}_64-bit.tar.gz" -O apigee-remote-service-envoy.tar.gz
+wget "https://github.com/apigee/apigee-remote-service-envoy/releases/download/v2.0.0/apigee-remote-service-envoy_2.0.0_linux_64-bit.tar.gz" -O apigee-remote-service-envoy.tar.gz
 
 
 
