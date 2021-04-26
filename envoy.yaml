@@ -47,11 +47,40 @@ static_resources:
                 route:
                   cluster: ws
                   prefix_rewrite: /
+                  host_rewrite_header: websocket
               - match: { prefix: /com.apigee.examples.grpc.server.grpcserver.MessengerService }
                 route:
                   cluster: grpc
 
           http_filters:
+          - name: envoy.filters.http.lua
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+              ### This one will be called on every single call
+              inline_code: |
+                function starts_with(str, start)
+                  return str:sub(1, #start) == start
+                end
+
+                function envoy_on_request(rh)
+                  local p = rh:headers():get(":path")
+                  if starts_with(p,'/graphql') then
+                    rh:logInfo("Handling path: "..p)
+                    rh:headers():add("x-target-name", "graphql")
+                  elseif starts_with(p,'/ws') then
+                    rh:logInfo("Handling path: "..p)
+                    rh:headers():add("x-target-name", "websocket")
+                  elseif starts_with(p,'/com.apigee.examples.grpc.server.grpcserver.MessengerService') then
+                    rh:logInfo("Handling path: "..p)
+                    rh:headers():add("x-target-name", "grpc")
+                  else
+                    rh:logInfo("Handling path: "..p)
+                    rh:headers():add("x-target-name", "unknown")
+                  end
+                end
+                function envoy_on_response(rh)
+                  --
+                end
           # evaluate JWT tokens, allow_missing allows API Key also
           - name: envoy.filters.http.jwt_authn
             typed_config: 

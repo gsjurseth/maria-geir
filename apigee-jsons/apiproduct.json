@@ -9,7 +9,7 @@
     },
     {
       "name": "apigee-remote-service-targets",
-      "value": "envoy.local,localhost:8080,localhost"
+      "value": "envoy.local,localhost:8080,localhost,graphql,grpc,websocket"
     }
   ],
   "apiResources": [
