@@ -11,6 +11,10 @@ The following have been setup and are run with docker compose
 * a nodejs service that consumes that topic and then sends those messages to any websocket clients that connect and use a unique groupId
 * an envoy service that proxies for all of it.
 
+And a nice image:
+
+[System Architecture]:images/layout.png "System Architecture"
+
 ## What's coming
 I'm in the process of building out a few more things
 * documentation published in the portal for all provided services
