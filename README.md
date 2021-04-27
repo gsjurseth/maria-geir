@@ -13,7 +13,7 @@ The following have been setup and are run with docker compose
 
 And a nice image:
 
-[System Architecture]:images/layout.png "System Architecture"
+![System Architecture](/images/layout.png "System Architecture")
 
 ## What's coming
 I'm in the process of building out a few more things
