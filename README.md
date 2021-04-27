@@ -32,6 +32,16 @@ Run the setup like so:
 ./setup.sh -a <path-to-ax-sa-json> -o your-org -e your-environment -t $(gcloud beta auth print-access-token) -r "http://remote-url-for-apigee-x" -u user@email.com
 ```
 
+With that complete you'll need to add the following `api_header` setting your to your config.yaml file. Simply locate the auth stanza
+and add append `api_header: x-target-name` like so:
+
+```yaml
+    auth:
+      jwt_provider_key: https://1.2.3.4.nip.io/remote-token/token
+      append_metadata_headers: true
+      api_header: x-target-name
+```
+
 ## Building and Runnig it once configured
 To get this running you'll need to build it all (after you've run setup mind you) by doing:
 
