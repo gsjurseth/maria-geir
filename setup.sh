@@ -69,7 +69,7 @@ tar xf apigee-remote-service-envoy.tar.gz apigee-remote-service-envoy
 cp apigee-remote-service-envoy envoy_adapter
 
 
-${BASEDIR}/apigee-remote-service-cli provision -o $org -e $env -t $token --runtime $remoteurl --analytics-sa ${analytics} > $config
+${BASEDIR}/apigee-remote-service-cli provision -f -o $org -e $env -t $token --runtime $remoteurl --analytics-sa ${analytics} > $config
 
 # Our api product
 curl -X POST "${BASEURL}/apiproducts" -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d @${BASEDIR}/apigee-jsons/apiproduct.json > ${BASEDIR}/my_apiproduct.json
