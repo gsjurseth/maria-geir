@@ -3,6 +3,8 @@ option java_multiple_files = true;
 option go_package = "apigee/examples/grpcserver";
 package com.apigee.examples.grpc.server.grpcserver;
 
+import "google/api/annotations.proto";
+
 message MessengerRequest {
   string msg = 1;
 }
@@ -12,6 +14,14 @@ message MessengerResponse {
 }
 
 service MessengerService {
-  rpc getGreeting(MessengerRequest) returns (MessengerResponse);
-  rpc getPirateGreeting(MessengerRequest) returns (MessengerResponse);
+  rpc getGreeting(MessengerRequest) returns (MessengerResponse) {
+    option (google.api.http) = {
+      get: "/say"
+    };
+  }
+  rpc getPirateGreeting(MessengerRequest) returns (MessengerResponse) {
+    option (google.api.http) = {
+      get: "/say"
+    };
+  }
 }

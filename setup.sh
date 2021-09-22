@@ -46,6 +46,9 @@ if [ -z "${env}" ] || [ -z "${org}" ] || [ -t "${token}" ] || [ -z "${remoteurl}
     usage
 fi
 
+BASEURL=https://apigee.googleapis.com/v1/organizations/${org}
+OS=$(uname -s)
+
 case $OS in
   "Linux")
     arch="linux"
@@ -55,8 +58,9 @@ case $OS in
   ;;
 esac
 
-wget "https://github.com/apigee/apigee-remote-service-cli/releases/download/v2.0.0/apigee-remote-service-cli_2.0.0_${arch}_64-bit.tar.gz" -O apigee-remote-service-cli.tar.gz
-wget "https://github.com/apigee/apigee-remote-service-envoy/releases/download/v2.0.0/apigee-remote-service-envoy_2.0.0_linux_64-bit.tar.gz" -O apigee-remote-service-envoy.tar.gz
+
+wget "https://github.com/apigee/apigee-remote-service-cli/releases/download/v2.0.2/apigee-remote-service-cli_2.0.2_${arch}_64-bit.tar.gz" -O apigee-remote-service-cli.tar.gz
+wget "https://github.com/apigee/apigee-remote-service-envoy/releases/download/v2.0.2/apigee-remote-service-envoy_2.0.2_linux_64-bit.tar.gz" -O apigee-remote-service-envoy.tar.gz
 
 
 
